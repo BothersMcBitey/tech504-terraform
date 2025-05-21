@@ -58,7 +58,7 @@ Two types:
 # Intro to Terraform
 
 ### What is Terraform?
-Terraform is an Orchestration tool. It treats infrastructure as immutable and disposable. Uses HCL (Hashicorp Config Language), which is declarative.
+Terraform is an Orchestration tool. It treats infrastructure as immutable and disposable. Uses HCL (Hashicorp Config Language), which is declarative. Syntax in HCL is {key = value}
 
 ### Why use it?
 Easy to use. Free and open-source (although the license has changed recently). It's cloud-agnostic, which it does through "providers" - interfaces between terraform and each cloud system. Lots of plugins.
