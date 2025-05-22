@@ -12,6 +12,7 @@
       - [Alternatives](#alternatives)
     - [Why use Terraform in different environments?](#why-use-terraform-in-different-environments)
   - [Terraform commands](#terraform-commands)
+- [Configuration Drift](#configuration-drift)
 
 # Infrastructure as Code
 What's the problem?
@@ -82,12 +83,20 @@ For Disaster Recovery
 
 ## Terraform commands
 
-- plan (non-destructive)
-- apply (destructive), also runs plan
-- destroy
-- format - prettier
-- init - setup folder
+- `plan` (non-destructive)
+- `apply` (destructive), also runs plan
+- `destroy`
+- `format` - prettier
+- `init` - setup folder
 
 Terraform code saved in .tf files. If multiple tfs in folder, it runs all - order shouldn't matter
 
 Automatically locks you into the provider version you first use - can change manually
+
+# Configuration Drift
+
+Over time small (often manual) changes to different machines/parts of infrastructure can result in part of the system having very divergent configs. One advantage of IaC is that you can easily spot these changes and fix them/distribute them.
+
+- `terraform plan` checks the state of the cloud vs the terraform code, and so will report any drift.
+- When fixing drift, terraform says infrastructure is immutable, and so stuff is destroyed and rebuilt to make it in-line with the plan.
+  - Terraform can do in-place modifications if it thinks that'll be faster. Hypocrite.
