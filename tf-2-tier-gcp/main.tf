@@ -3,6 +3,8 @@ provider "google" {
   region  = var.region
 }
 
+#should be a "google_compute_network"
+
 resource "google_vmwareengine_private_cloud" "tech504-callum-tf-vpc" {
   location = var.zone
   name = "tech504-callum-tf-vpc"
