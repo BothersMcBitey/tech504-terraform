@@ -35,9 +35,6 @@
   - name: install node.js
     ansible.builtin.apt:
       pkg=nodejs state=present
- # - name: install npm
- #   ansible.builtin.apt:
- #     pkg=npm state=present
   - name: install unzip
     ansible.builtin.apt:
       pkg=unzip state=present
