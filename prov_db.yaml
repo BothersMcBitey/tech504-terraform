@@ -1,0 +1,31 @@
+# this should install the database and get it running
+---
+- name: install and run database
+  hosts: database
+  gather_facts: yes
+  become: true
+  tasks:
+  - name: update apt cache
+    ansible.builtin.apt:
+      update_cache: yes
+  - name: upgrade the os
+    ansible.builtin.apt:
+      upgrade: dist
+  - name: install gnupg
+    ansible.builtin.apt:
+      pkg=gnupg state=present
+  - name: install curl
+    ansible.builtin.apt:
+      pkg=curl state=present
+  - name: Get mongodb key
+    apt_key:
+        url: https://www.mongodb.org/static/pgp/server-7.0.asc
+        state: present
+  - name: install mongodb repo
+    apt_repository:
+      repo: "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse"
+      state: present
+      update_cache: yes
+  - name: upgrade the os again for mongodb stuff
+    ansible.builtin.apt:
+      upgrade: dist
