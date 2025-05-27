@@ -6,6 +6,24 @@ provider "aws" {
  region = var.region
 }
 
+data "aws_key_pair" "tech504-callum-aws"{
+  key_name = "tech504-callum-aws"
+  include_public_key = true
+  #key_pair_id = "key-035c0e1c5a585ddd1"
+}
+
+output "fingerprint" {
+  value = data.aws_key_pair.tech504-callum-aws.fingerprint
+}
+
+output "name" {
+  value = data.aws_key_pair.tech504-callum-aws.key_name
+}
+
+output "id" {
+  value = data.aws_key_pair.tech504-callum-aws.id
+}
+
 # which resource we actually want
 resource "aws_instance" "tech504-callum-ubuntu-2204-ansible-controller" {
     # which image do we use? - on AWS called an AMI for some reason.
@@ -20,7 +38,7 @@ resource "aws_instance" "tech504-callum-ubuntu-2204-ansible-controller" {
 
     vpc_security_group_ids = [aws_security_group.tech504-callum-ansible-ssh-only.id]
 
-    key_name = aws_key_pair.tech504-callum-key.id    
+    key_name = data.aws_key_pair.tech504-callum-aws.key_name
     
     # instance name
     tags = {
@@ -41,17 +59,12 @@ resource "aws_instance" "tech504-callum-ubuntu-2204-ansible-target-node-app" {
 
     vpc_security_group_ids = [aws_security_group.tech504-callum-ansible-ssh-http-3000.id]
 
-    key_name = aws_key_pair.tech504-callum-key.id    
+    key_name = data.aws_key_pair.tech504-callum-aws.key_name
     
     # instance name
     tags = {
         Name = "tech504-callum-ubuntu-2204-ansible-target-node-app"
     }
-}
-
-resource "aws_key_pair" "tech504-callum-key" {
-    key_name = "tech504-callum-key"
-    public_key = var.public_key
 }
 
 # Using Terraform and Terraform official documentation:

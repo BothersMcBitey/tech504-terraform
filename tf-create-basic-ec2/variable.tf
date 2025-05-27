@@ -21,3 +21,11 @@ variable "machine" {
 variable "is_public" {
   default = true
 }
+
+variable "public_key"{
+  default =  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINkiPHg6A5qDxtEZU4dMqKdSAC3KQqV7Php3a1ohD4DC callu.re.anderson@gmail.com"
+}
+
+variable "CIDR" {
+  default = "0.0.0.0/0"
+}
