@@ -1,0 +1,22 @@
+# starts with ---
+---
+- name: install nginx play
+  hosts: web
+  # get comprehensive facts
+  gather_facts: yes
+  # become means 'run as sudo'
+  become: true
+  # instructions in the play are "tasks"
+  tasks:
+    # update
+  - name: update apt cache
+    ansible.builtin.apt:
+      update_cache: yes
+  - name: upgrade the os
+    ansible.builtin.apt:
+      upgrade: dist
+  - name: install nginx
+    ansible.builtin.apt:
+      pkg=nginx state=present
+
+

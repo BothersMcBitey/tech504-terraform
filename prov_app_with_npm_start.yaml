@@ -1,0 +1,49 @@
+# this will install some of the dependencies for the test app, and run it
+---
+- name: install app dependencies and run app
+  hosts: web
+  gather_facts: yes
+  become: true
+  tasks:
+  - name: update apt cache
+    ansible.builtin.apt:
+      update_cache: yes
+  - name: upgrade the os
+    ansible.builtin.apt:
+      upgrade: dist
+  - name: install nginx
+    ansible.builtin.apt:
+      pkg=nginx state=present
+  - name: Get nodejs key
+    apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+  - name: install nodejs repo
+    apt_repository:
+      repo: deb https://deb.nodesource.com/node_20.x {{ ansible_lsb.codename }} main
+      state: present
+      update_cache: yes
+  - name: install node.js
+    ansible.builtin.apt:
+      pkg=nodejs state=present
+ # - name: install npm
+ #   ansible.builtin.apt:
+ #     pkg=npm state=present
+  - name: install unzip
+    ansible.builtin.apt:
+      pkg=unzip state=present
+  - name: download app
+    ansible.builtin.get_url:
+      url: https://github.com/BothersMcBitey/sparta_test_app/archive/refs/heads/main.zip
+      dest: /app.zip
+  - name: unzip app
+    ansible.builtin.shell:
+      cmd: unzip -qu /app.zip -d /
+  - name: install  app
+    community.general.npm:
+      name: app
+      path: /sparta_test_app-main/app
+  - name: run app
+    ansible.builtin.shell:
+      chdir: /sparta_test_app-main/app
+      cmd: node app.js
