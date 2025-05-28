@@ -37,13 +37,24 @@
    - Target node needs to be added with username and path to private key
      - Syntax is `ec2-app-instance ansible_host=[ip] ansible_user=[login] ansible_ssh_private_key_file=[credentials]`
    - `ansible all -m ping` checks if you can access them
- - Run commands (ad-hoc commands) on inventory machines from controller
+ - Run commands on inventory machines from controller
    - `ansible-inventory --graph` or `ansible-inventory --list` will show you the current inventory
    - `ansible [group] -a [args]` runs ad-hoc commands
      - e.g. `ansible [group] -a "uname -a"`  gives info about each machine in inventory. `ansible [group] -a "date"` shows the date as each machine knows it.
      - By default, commands use `ansible.builtin.command`.
    - other modules exist (e.g. `ansible.builtin.apt`). It's better to use specific modules where possible, as it's more idempotent. An example is `-m ansible.builtin.apt -a "upgrade=dist" --become`.
    - To send data to your targets, `ansible.builtin.copy -a "src=[] dest=[] mode=XXX"`. Mode lets you set access permissions.
+ - Ansible commands ran from outside a playbook (e.g. on terminal) are called Ad-hoc.
+ - In your inventory, you can specify groups within groups. Syntax is:
+``` ansible
+[MyGroup:children]
+[web]
+host....
+host....
+[database]
+host....
+host....
+```
 
 ## Playbooks
 - written in yaml
@@ -64,3 +75,4 @@
      ansible.builtin.apt:
        update_cache: yes
 ```
+- You can create "master playbooks" which trigger multiple playbooks in the order specified
