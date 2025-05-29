@@ -7,6 +7,7 @@
   - [Stages of Jenkins](#stages-of-jenkins)
   - [Alternatives](#alternatives)
 - [Why build a CICD Pipeline?](#why-build-a-cicd-pipeline)
+- [How does Jenkins Work?](#how-does-jenkins-work)
 
 ## What is CI?
 - continuous integration
@@ -68,3 +69,13 @@ Two versions:
   - Feedback comes back faster
 - Bug fixes can go fast
 - Generally al lot of speeed benefits
+
+# How does Jenkins Work?
+- When a developer pushes to certain branches, github/etc will trigger a webhook to alert listeners a change has been made
+- Jenkins master node either runs the pipeline itself, or sends it to an agent node
+  - using an agent node is generally better, or at least safer
+- The pipeline might be the following steps:
+   1. Test code
+   2. Merge into main/product branch
+   3. build/deploy code
+- It can then directly connect to production machines to deploy it automatically
