@@ -8,6 +8,8 @@
   - [Alternatives](#alternatives)
 - [Why build a CICD Pipeline?](#why-build-a-cicd-pipeline)
 - [How does Jenkins Work?](#how-does-jenkins-work)
+  - [Example Setup for a Jenkins Pipeline](#example-setup-for-a-jenkins-pipeline)
+    - [Annotated Screenshots](#annotated-screenshots)
 
 ## What is CI?
 - continuous integration
@@ -79,3 +81,28 @@ Two versions:
    2. Merge into main/product branch
    3. build/deploy code
 - It can then directly connect to production machines to deploy it automatically
+
+## Example Setup for a Jenkins Pipeline
+Screenshots of the Jenkins interface annotated to match this guide can be found [below](#annotated-screenshots).
+1. From the Jenkins Dashboard, hit `+ New Item` in the top left. This starts the process of building a project (one step in the pipeline).
+2. Name the project and choose `Freestyle project`.
+   1. For future projects you can clone existing ones, which saves time and reduces errors.
+3. This is where all the functional stuff is defined. Our first job is to test code when changes are made to the `dev` branch of our repo. We configure:
+   1. How many builds it keeps saved in history.
+   2. Give it the URL of our git repo
+   3. In `Source Code Management` we give it the git ssh url, credentials to access the repo, and tell it which branch to use.
+   4. We set a build trigger for a Github Webhook
+   5. Because the app uses NodeJS, in `Build Environment` we tell it to provide a NodeJS install and which version to use.
+   6. Under `Build Steps` we set a shell script for it to run, which will install the app code and run the unit tests.
+   7. Later, when we have the next stage, we set a `Post-build Action` to trigger the next step of the pipeline IF this one succeeds.
+4. Back on the dashboard you run this first step manually from the project list. 
+   1. You'll see it go through the job queue and the run on the left hand panel. 
+   2. When it's done you can see the result in the job list.
+5. The console output for each run can be viewed by clicking on the job in the list view.
+
+### Annotated Screenshots
+
+![dashboard](img/Jenkins_Dashboard_annotated.png)
+![newproj](img/Jenkins_Newproject_annotated.png)
+![config](img/Jenkins_Config_annotated.png)
+![consolelog](img/Jenkins_Console_Output_annottated.png)
