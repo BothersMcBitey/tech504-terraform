@@ -94,11 +94,12 @@ Screenshots of the Jenkins interface annotated to match this guide can be found 
    4. We set a build trigger for a Github Webhook
    5. Because the app uses NodeJS, in `Build Environment` we tell it to provide a NodeJS install and which version to use.
    6. Under `Build Steps` we set a shell script for it to run, which will install the app code and run the unit tests.
-   7. Later, when we have the next stage, we set a `Post-build Action` to trigger the next step of the pipeline IF this one succeeds.
+   7. Later, when we have the next stage, we set a `Post-build Action` to trigger the next step of the pipeline IF this one succeeds. Alternatively, under `Build Triggers` we can set a job to only run after a previous job is completed.
 4. Back on the dashboard you run this first step manually from the project list. 
    1. You'll see it go through the job queue and the run on the left hand panel. 
    2. When it's done you can see the result in the job list.
 5. The console output for each run can be viewed by clicking on the job in the list view.
+6. In the weather (W) column on the dashboard it gives a weather based, representation of the last 5 runs and their success rate, where sunny means all is good and stormy means they have all failed.
 
 ### Annotated Screenshots
 

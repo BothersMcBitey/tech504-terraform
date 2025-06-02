@@ -4,10 +4,12 @@
 # give desired region
 provider "aws" {
  region = var.region
+ access_key = var.key
+ secret_key = var.secret_key
 }
 
 data "aws_key_pair" "tech504-callum-aws"{
-  key_name = "tech504-callum-aws"
+  key_name = "tech504-callum-laptop-pem"
   include_public_key = true
 }
 
@@ -17,7 +19,7 @@ resource "aws_instance" "tech504-callum-jenkins-server" {
     # what is AMI ID? ami-0c1c30571d2dae5c9 (ubuntu 22.04lts)
     ami            = var.app_ami_id    
     # which instance type - t3.micro
-    instance_type = var.machine   
+    instance_type = "t3.small"//var.machine   
     # do we want a public IP?
     associate_public_ip_address = var.is_public
     vpc_security_group_ids = [aws_security_group.tech504-callum-jenkins-security.id]
@@ -26,6 +28,31 @@ resource "aws_instance" "tech504-callum-jenkins-server" {
     tags = {
         Name = var.name
     }
+}
+
+resource "aws_instance" "tech504-callum-jenkins-target" {
+    # which image do we use? - on AWS called an AMI for some reason.
+    # what is AMI ID? ami-0c1c30571d2dae5c9 (ubuntu 22.04lts)
+    ami            = var.app_ami_id    
+
+    # which instance type - t3.micro
+    instance_type = var.machine
+    
+    # do we want a public IP?
+    associate_public_ip_address = var.is_public
+
+    vpc_security_group_ids = [data.aws_security_group.app_security.id]
+
+    key_name = data.aws_key_pair.tech504-callum-aws.key_name
+    
+    # instance name
+    tags = {
+        Name = "tech504-callum-jenkins-target"
+    }
+}
+
+data "aws_security_group" "app_security" {
+  id = "sg-01afda1f8793d5bd0"
 }
 
 # Using Terraform and Terraform official documentation:
