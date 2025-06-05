@@ -24,6 +24,7 @@
     - [Pros v Cons of maintained images](#pros-v-cons-of-maintained-images)
       - [Pros](#pros)
       - [Cons](#cons)
+- [Commands](#commands)
 
 # Wherefore art thou Kubernetes?
 - It's a container organization/orchestration tool.
@@ -109,7 +110,7 @@ only base64 encoded, not encrypted
 Logical grouping for an application's resources. Default namespace is called "default"
 
 ### ReplicaSet
-Creates more pods. Usually identical.
+Creates more pods. Usually identical. They're also Stateless (other types of set exist).
 
 ### Deployment
 Defines the replica sets
@@ -130,3 +131,10 @@ Defines the replica sets
 - often optimized versions (speed/size/etc)
 #### Cons
 - Dependent on maintainer schedule for fixes
+
+# Commands
+- `kubectl create -f [file]`
+- `kubectl get [all/deploy/replicasets/pod/etc]`
+- `kubectl describe [resource_id]`
+- `kubectl edit [resource type] [resource]`
+  - e.g. `kubectl edit deploy nginx-deployment`
