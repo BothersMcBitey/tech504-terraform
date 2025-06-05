@@ -5,7 +5,6 @@
   - [Microservices](#microservices)
 - [Docker](#docker)
   - [Docker Compose](#docker-compose)
-- [Kubernetes](#kubernetes)
 - [Task](#task)
 
 # Teachable Notes
@@ -50,9 +49,6 @@ Wee diddy individual parts of the whole application, split into chunks. Allows s
   - `-d` runs detatched mode, so it won't show any logs or freeze your terminal.
   - `docker-compose ps` shows composed containers.
   - basically, most docker commaands work with docker-compose.
-
-# Kubernetes
-Can be used as an orchestration tool
 
 
 # Task
