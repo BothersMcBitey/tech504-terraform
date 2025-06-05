@@ -1,24 +1,24 @@
-# Docker & Kubernetes
+# Docker
 
-- [Docker \& Kubernetes](#docker--kubernetes)
+- [Docker](#docker)
 - [Teachable Notes](#teachable-notes)
   - [Microservices](#microservices)
-- [Docker](#docker)
+- [Docker](#docker-1)
   - [Docker Compose](#docker-compose)
 - [Task](#task)
 
 # Teachable Notes
 From the Teachable course, please prepare yourself to answer questions similar to these:
 
-- Differences between virtualisation and containerisation
+- Differences between virtualization and containerization
     VMs are fully simulated machines complete with OS and such. Containers are smaller units packaged with only the specific dependencies for that application.
 - What is usually included in a container vs virtual machine?
 - Pros/cons of using:
   - Traditional architecture.
         Simple, easy, but no flexibility. Hard to scale up or down.
-  - Virtualisation.
+  - Virtualization.
         Let's you run multiple systems on one machine, so more flexible than ^^. But each VM has to simulate an entire OS, so they're pretty resource heavy.
-  - Containerisation.
+  - Containerization.
         Lighter weight than VMs. Smaller and cross-platform, making them more flexible again. Doesn't have to copy the whole OS.
   - Docker.
         See below
@@ -36,7 +36,7 @@ From the Teachable course, please prepare yourself to answer questions similar t
 - How can you automate image creation?
 
 ## Microservices
-Wee diddy individual parts of the whole application, split into chunks. Allows scaling of specific subsytems. Reduces coupling. Subsystems can be workon/updated seperately
+Wee diddy individual parts of the whole application, split into chunks. Allows scaling of specific subsystems. Reduces coupling. Subsystems can be worked on/updated separately
 
 # Docker
 - `docker exec -it [container] [command]`
@@ -46,9 +46,9 @@ Wee diddy individual parts of the whole application, split into chunks. Allows s
 - defined in a YAML file
 - use Docker Compose to start/stop/manages services defined in YAML file (docker-compose.yaml)
 - `docker-compose up` runs the composer. 
-  - `-d` runs detatched mode, so it won't show any logs or freeze your terminal.
+  - `-d` runs detached mode, so it won't show any logs or freeze your terminal.
   - `docker-compose ps` shows composed containers.
-  - basically, most docker commaands work with docker-compose.
+  - basically, most docker commands work with docker-compose.
 
 
 # Task
@@ -60,7 +60,7 @@ Steps:
 Create a new folder (because you can only have one Dockerfile per folder)
 Put your 'app' folder in the that folder
 Create a new Dockerfile (see below for the Dockerfile starting code)
-Similar commands to these will be needed later, especially to show the app running in the brower at port 3000:
+Similar commands to these will be needed later, especially to show the app running in the browser at port 3000:
 docker build -t daraymonsta/tech201-app:v1 .
 docker run -d -p 3000:3000 daraymonsta/tech201-app:v1
 docker push daraymonsta/tech201-app:v1
