@@ -4,6 +4,7 @@
 - [Teachable Notes](#teachable-notes)
   - [Microservices](#microservices)
 - [Docker](#docker-1)
+    - [Commands](#commands)
   - [Docker Compose](#docker-compose)
 - [Task](#task)
 
@@ -39,7 +40,26 @@ From the Teachable course, please prepare yourself to answer questions similar t
 Wee diddy individual parts of the whole application, split into chunks. Allows scaling of specific subsystems. Reduces coupling. Subsystems can be worked on/updated separately
 
 # Docker
+
+### Commands
 - `docker exec -it [container] [command]`
+- `docker build -t [image-name]:[tag] [location]`
+  - e.g. ` docker build -t tech504-app:v1 .`
+- docker ps
+- docker images
+   6 docker run -d -p 80:3000 729fc
+   7 ls
+   8 docker ps
+   9 docker stop 15bb
+  10 docker ps
+  11 docker images
+  12 docker rm 729fc
+  13 docker build . -t callumreanderson/sparta_app_image
+  14 docker images
+  15 docker commit be85 callumreanderson/sparta_app_image:v1
+  16 docker build . -t callumreanderson/sparta_app_image:v1
+  17 docker images
+  18 docker push callumreanderson/sparta_app_image:v1
 
 ## Docker Compose
 - for multi-container Docker applications

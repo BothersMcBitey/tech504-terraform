@@ -136,5 +136,9 @@ Defines the replica sets
 - `kubectl create -f [file]`
 - `kubectl get [all/deploy/replicasets/pod/etc]`
 - `kubectl describe [resource_id]`
-- `kubectl edit [resource type] [resource]`
+- `kubectl edit [resource type] [resource]` - edit resource as it runs
   - e.g. `kubectl edit deploy nginx-deployment`
+- `kubectl apply -f [file]` - this updates it based on the yaml file. Will also create from new.
+- `kubectl scale --current-replicas=[num] --replicas=[num] [deployment]`
+  - e.g. `kubectl scale --current-replicas=5 --replicas=6 deployment.apps/nginx-deployment`
+- `kubectl delete -f [file]` - deletes anything defined in the yaml file
