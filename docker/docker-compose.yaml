@@ -1,0 +1,19 @@
+services:
+  db:
+    image: callumreanderson/sparta_db_image:v2
+    ports:
+      - "27017:27017"
+    volumes:
+      - db_data:/data/db
+  app:
+    image: callumreanderson/sparta_app_image:v1
+    ports:
+      - "80:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=mongodb://db/posts
+    command: bash -c "node seeds/seed.js && node app.js"
+
+volumes:
+  db_data:
