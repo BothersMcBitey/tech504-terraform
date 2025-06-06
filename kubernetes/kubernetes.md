@@ -25,6 +25,7 @@
       - [Pros](#pros)
       - [Cons](#cons)
 - [Commands](#commands)
+- [Autoscaling on K8s](#autoscaling-on-k8s)
 
 # Wherefore art thou Kubernetes?
 - It's a container organization/orchestration tool.
@@ -142,3 +143,19 @@ Defines the replica sets
 - `kubectl scale --current-replicas=[num] --replicas=[num] [deployment]`
   - e.g. `kubectl scale --current-replicas=5 --replicas=6 deployment.apps/nginx-deployment`
 - `kubectl delete -f [file]` - deletes anything defined in the yaml file
+- `kubectl exec -it sparta-app-deployment-6d97cf76b9-847nh -- sh` - example of how to remote into container
+
+# Autoscaling on K8s
+ 4 main types:
+ 1. HPA (Horizontal Pod Autoscaler) (most common)
+     - automatically scales the number of pods (e.g. replicaset)
+     - configured using k8s yaml definitions
+ 1. Cluster Autoscaler
+     - automatically adjusts the size of the k8s cluster (num nodes)
+     - config at cluster level
+ 1. VPA (Vertical pod autoscaler)
+     - Adjust the resources available to containers in the pod
+ 1. KEDA (Kubernetes Event-Driven Autoscaling)
+     - provides fine-grained control over scaling
+     - triggered by certain events, based on external metrics
+     - integrates with HPA

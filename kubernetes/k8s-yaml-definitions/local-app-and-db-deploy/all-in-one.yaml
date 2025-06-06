@@ -1,0 +1,94 @@
+---
+apiVersion: apps/v1 # specify api to use for deployment
+kind: Deployment # kind of service/object you want to create
+metadata:
+  name: sparta-db-deployment # name the deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: sparta-db # look for this label/tag to match with k8 service
+  # create a replica set of this with instances/pods
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sparta-db
+    spec:
+      containers:
+        - name: sparta-db
+          image: callumreanderson/sparta_db_image:v3
+          ports:
+            - containerPort: 27017
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sparta-db-svc
+  namespace: default
+
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: sparta-db # this label connect this service to the deployment
+  type: ClusterIP # also use LoadBalancer - for local use cluster IP
+
+
+
+
+
+
+
+
+
+---
+apiVersion: apps/v1 # specify api to use for deployment
+kind: Deployment # kind of service/object you want to create
+metadata:
+  name: sparta-app-deployment # name the deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: sparta-app # look for this label/tag to match with k8 service
+  # create a replica set of this with instances/pods
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sparta-app
+    spec:
+      containers:
+        - name: sparta-app
+          image: callumreanderson/sparta_app_image:v1 # the image you created to run nginx in a container
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: "mongodb://sparta-db-svc:27017/posts"
+
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sparta-app-svc
+  namespace: default
+
+spec:
+  ports:
+    - nodePort: 30000 # range is 30000-32768
+      port: 80
+      targetPort: 3000
+  selector:
+    app: sparta-app # this label connect this service to the deployment
+  type: NodePort # also use LoadBalancer - for local use cluster IP

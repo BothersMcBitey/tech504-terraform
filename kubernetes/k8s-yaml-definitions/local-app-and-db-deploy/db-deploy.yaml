@@ -1,0 +1,21 @@
+apiVersion: apps/v1 # specify api to use for deployment
+kind: Deployment # kind of service/object you want to create
+metadata:
+  name: sparta-db-deployment # name the deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: sparta-db # look for this label/tag to match with k8 service
+  # create a replica set of this with instances/pods
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sparta-db
+    spec:
+      containers:
+        - name: sparta-db
+          image: callumreanderson/sparta_db_image:v3
+          ports:
+            - containerPort: 27017

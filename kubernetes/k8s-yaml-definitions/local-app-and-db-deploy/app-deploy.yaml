@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: sparta-app # look for this label/tag to match with k8 service
   # create a replica set of this with instances/pods
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -21,8 +21,4 @@ spec:
             - containerPort: 80
           env:
             - name: DB_HOST
-              value: "mongodb://sparta-app-svc:27017/posts"
-        - name: sparta-db
-          image: callumreanderson/sparta_db_image:v3
-          ports:
-            - containerPort: 27017
+              value: "mongodb://sparta-db-svc:27017/posts"
