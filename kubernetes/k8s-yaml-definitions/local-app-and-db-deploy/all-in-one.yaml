@@ -1,4 +1,33 @@
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sparta-db-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 6Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sparta-db-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+---
 apiVersion: apps/v1 # specify api to use for deployment
 kind: Deployment # kind of service/object you want to create
 metadata:
@@ -14,15 +43,19 @@ spec:
     metadata:
       labels:
         app: sparta-db
-    spec:
+    spec:      
       containers:
         - name: sparta-db
           image: callumreanderson/sparta_db_image:v3
           ports:
             - containerPort: 27017
-
-
-
+          volumeMounts:
+            - mountPath: "/usr/db"
+              name: sparta-db-storage
+      volumes:
+        - name: sparta-db-storage
+          persistentVolumeClaim:
+            claimName: sparta-db-claim
 
 ---
 apiVersion: v1
@@ -38,14 +71,6 @@ spec:
   selector:
     app: sparta-db # this label connect this service to the deployment
   type: ClusterIP # also use LoadBalancer - for local use cluster IP
-
-
-
-
-
-
-
-
 
 ---
 apiVersion: apps/v1 # specify api to use for deployment
@@ -72,10 +97,6 @@ spec:
           env:
             - name: DB_HOST
               value: "mongodb://sparta-db-svc:27017/posts"
-
-
-
-
 
 ---
 apiVersion: v1
